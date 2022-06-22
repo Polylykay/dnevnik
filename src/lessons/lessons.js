@@ -1,7 +1,8 @@
 import {sendQuery} from "../sendQuery";
 import {useEffect, useState} from "react";
 import React from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
+
 
 export const Lessons = () => {
     const [state, setState] = useState({toUpdate: true, lessons: []})
@@ -13,21 +14,30 @@ export const Lessons = () => {
                 })
         }
     })
+    const navigate = useNavigate();
+    const goToLesson = (id) => {
+        navigate("/lesson/" + id, { replace: true });
+    }
     return (
         <>
             <table>
+                <thead>
+                <tr>
+                    <td>DATE</td>
+                    <td>NP</td>
+                    <td>TID</td>
+                    <td>TITLE</td>
+                </tr>
+                </thead>
                 <tbody>
                 {
                     state.lessons.map((lesson, index) => {
                         return (
-                            <tr key={index}>
-                                <Link to={'/lessons/' + lesson.CID} >
-
-                                    <td>{lesson.DATE}</td>
-                                    <td>{lesson.NP}</td>
-                                    <td>{lesson.TID}</td>
-                                    <td>{lesson.TITLE}</td>
-                                </Link>
+                            <tr key={index} onClick={() => goToLesson(lesson.CID)}>
+                                <td>{lesson.DATE}</td>
+                                <td>{lesson.NP}</td>
+                                <td>{lesson.TID}</td>
+                                <td>{lesson.TITLE}</td>
                             </tr>
                         )
                     })
@@ -51,3 +61,5 @@ export const Lessons = () => {
         </>
     )
 }
+// <Link to={'/lessons/' + lesson.CID} >
+// </Link>
