@@ -41,7 +41,6 @@ export const Lessons = () => {
                     <TableBody>
                         {
                             state.lessons.map((lesson, index) => {
-                                console.log(lesson)
                                 return (
                                     <TableRow key={index} onClick={() => goToLesson(lesson.CID)}>
                                         <TableCell>{lesson.DATE}</TableCell>

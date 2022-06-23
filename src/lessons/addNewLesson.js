@@ -12,7 +12,6 @@ import {Link} from "react-router-dom";
 
 export const AddNewLesson = () => {
     const [state, setState] = useState({
-        toUpdate: true,
         teachers: [],
         skills: [],
         groups: [],
@@ -28,16 +27,16 @@ export const AddNewLesson = () => {
     const [openError, setOpenError] = useState(false);
 
     useEffect(() => {
-        if (state.toUpdate){
+        if (!state.teachers.length) {
             sendQuery(`SELECT TID, SID FROM Teachers`)
                 .then(t => {
                     setState({
                         ...state,
-                        toUpdate: false,
                         teachers: t
                     })
-
                 })
+        }
+        if (!state.skills.length) {
             sendQuery(`SELECT TITLE, SID FROM skills`)
                 .then(s => {
                     setState({
@@ -45,6 +44,8 @@ export const AddNewLesson = () => {
                         skills: s
                     })
                 })
+        }
+        if (!state.groups.length) {
             sendQuery(`SELECT * FROM groupSt`)
                 .then(g => {
                     setState({
