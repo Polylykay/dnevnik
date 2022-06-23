@@ -2,6 +2,14 @@ import {sendQuery} from "../sendQuery";
 import {useEffect, useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableHead from "@mui/material/TableHead";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import {TableBody} from "@mui/material";
+import {Link} from "react-router-dom";
 
 
 export const Lessons = () => {
@@ -19,46 +27,39 @@ export const Lessons = () => {
         navigate("/lesson/" + id, { replace: true });
     }
     return (
-        <>
-            <table>
-                <thead>
-                <tr>
-                    <td>DATE</td>
-                    <td>NP</td>
-                    <td>TID</td>
-                    <td>TITLE</td>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    state.lessons.map((lesson, index) => {
-                        return (
-                            <tr key={index} onClick={() => goToLesson(lesson.CID)}>
-                                <td>{lesson.DATE}</td>
-                                <td>{lesson.NP}</td>
-                                <td>{lesson.TID}</td>
-                                <td>{lesson.TITLE}</td>
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </table>
-            <h2>Добавить пару</h2>
-            <form>
-                <label htmlFor="ClassDate">Дата</label>
-                <input type="text" id="ClassDate" />
-                <label htmlFor="PairNumber">Номер пары</label>
-                <input type="number" min="1" max="5" id="PairNumber" />
-                <label htmlFor="TeacherId">Учитель</label>
-                <input type="text" id="TeacherId" />
-                <label htmlFor="Skill">Предмет</label>
-                <input type="text" id="Skill" />
-                <label htmlFor="Group">Группа</label>
-                <input type="text" id="Group" />
-                <button id="addPair">Добавить</button>
-            </form>
-        </>
+        <div style={{ minWidth: 650, maxWidth: '70vw', margin: '100px auto' }}>
+            <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Дата пары</TableCell>
+                            <TableCell>Номер пары</TableCell>
+                            <TableCell>Преподаватель</TableCell>
+                            <TableCell>Предмет</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            state.lessons.map((lesson, index) => {
+                                return (
+                                    <TableRow key={index} onClick={() => goToLesson(lesson.CID)}>
+                                        <TableCell>{lesson.DATE}</TableCell>
+                                        <TableCell>{lesson.NP}</TableCell>
+                                        <TableCell>{lesson.TID}</TableCell>
+                                        <TableCell>{lesson.TITLE}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <div style={{textAlign: 'center'}}>
+                <Link to={'add-new-lesson'} style={{color: 'blue', textDecoration: 'none'}}>
+                    Создать новую пару
+                </Link>
+            </div>
+        </div>
     )
 }
 // <Link to={'/lessons/' + lesson.CID} >
