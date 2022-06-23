@@ -16,7 +16,7 @@ export const Lessons = () => {
     const [state, setState] = useState({toUpdate: true, lessons: []})
     useEffect(() => {
         if (state.toUpdate){
-            sendQuery('SELECT CID, "DATE", NP, TID, TITLE FROM `schedule` s LEFT JOIN skills sk on sk.SID = s.SID')
+            sendQuery('SELECT CID, `DATE`' + ', NP, TID, TITLE FROM schedule s LEFT JOIN skills sk on sk.SID = s.SID')
                 .then(l => {
                     setState({...state, toUpdate: false, lessons: l})
                 })
@@ -41,6 +41,7 @@ export const Lessons = () => {
                     <TableBody>
                         {
                             state.lessons.map((lesson, index) => {
+                                console.log(lesson)
                                 return (
                                     <TableRow key={index} onClick={() => goToLesson(lesson.CID)}>
                                         <TableCell>{lesson.DATE}</TableCell>
